@@ -208,7 +208,7 @@ const moveSnake = (movex, movey) => {
 
 			gamelost = true;
 		}
-		else if (snake[0].y + nextY < 0 || snake[0].x > 900)
+		else if (snake[0].y + nextY < 0 || snake[0].y > 900)
 		{
 			console.log("GAME OVER!");
 			snake = [];
@@ -322,7 +322,7 @@ const main = () => {
 		drawAssets();
 
 		main();
-	}, 1000 / 15)
+	}, 1000 / 11)
 }
 
 document.addEventListener("keydown", getSnakeInput);
