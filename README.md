@@ -4,4 +4,4 @@ My first game, made with vanilla JS, not well optimized or good but a first proj
 TODO:
   -- remove vertical movement
   -- add colider to snake, lose con
-  -- quick movement makes snake not apple some times (can be realted to vertical movement)
+  -- quick movement makes snake not eat apple some times (can be realted to vertical movement)
