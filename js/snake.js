@@ -74,7 +74,6 @@ const addSnakePart = (xcord, ycord, array) => {
 	array.unshift({x: xcord, y: ycord});
 
 	// console.log(array);
-
 }
 
 const shiftSnakePos = (xcord, ycord, array) => {
@@ -84,8 +83,7 @@ const shiftSnakePos = (xcord, ycord, array) => {
 
 	snake.pop();
 
-	console.log(array);
-
+	//console.log(array);
 }
 
 const createRandomApplePos = () => {
@@ -95,10 +93,16 @@ const createRandomApplePos = () => {
 	let randAmount = Math.floor(Math.random() * 29);
 	let xrandPos = (gameBoard.width / 30) * randAmount;
 
-	while (xrandPos % 30 != 0)
+	let i = 0;
+
+	while (xrandPos % 30 != 0 && snake[i].x != xrandPos && i < snake.length)
 	{
 		randAmount = Math.floor(Math.random() * 29);
 		xrandPos = (gameBoard.width / 30) * randAmount;
+		if(snake[i] != xrandPos)
+		{
+			i++;
+		}
 	}
 
 	let appleX = xrandPos;
@@ -197,14 +201,14 @@ const moveSnake = (movex, movey) => {
 			score += 1;
 		}
 
-		if(snake[0].y + nextY >= gameBoard.height || snake[1].x < 0)
+		if(snake[0].y + nextY > gameBoard.height || snake[0].x < 0)
 		{
 			console.log("GAME OVER!");
 			snake = [];
 
 			gamelost = true;
 		}
-		else if (snake[0].y + nextY <= -28)
+		else if (snake[0].y + nextY < 0 || snake[0].x > 900)
 		{
 			console.log("GAME OVER!");
 			snake = [];
@@ -306,19 +310,19 @@ const main = () => {
 
 	setTimeout(function onTick()
 	{
-		drawAssets();
-
 		if (nextX == 30 || nextX == -30)
 		{
-			moveSnake(true, false);
+			moveSnake(true, false)
 		}
 		else if (nextY == 30 || nextY == -30)
 		{
 			moveSnake(false, true);
 		}
 
+		drawAssets();
+
 		main();
-	}, 1000 / 4)
+	}, 1000 / 15)
 }
 
 document.addEventListener("keydown", getSnakeInput);
