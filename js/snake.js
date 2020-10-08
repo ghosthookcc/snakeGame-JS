@@ -66,6 +66,11 @@ const drawBoard = () => {
 	gameContext.fillRect(0, gameBoard.height, gameBoard.width, -2);
 	gameContext.strokeRect(0, gameBoard.height, gameBoard.width, -2);
 
+	/*
+	gameContext.fillRect(30, 0, snakeChunkWidth, snakeChunkHeight);
+	gameContext.strokeRect(30, 0, snakeChunkWidth, snakeChunkHeight);
+	*/
+
 }
 
 const addSnakePart = (xcord, ycord, array) => {
@@ -157,7 +162,6 @@ const drawSnake = () => {
 }
 
 const moveSnake = (movex, movey) => {
-
 	snakehead = { x: snake[0].x, y: snake[0].y }
 
 	if(movex)
@@ -171,14 +175,14 @@ const moveSnake = (movex, movey) => {
 			score += 1;
 		}
 
-		if(snake[0].x + nextX >= gameBoard.width)
+		if(snakehead.x >= gameBoard.width)
 		{
 			console.log("GAME OVER!");
 			snake = [];
 
 			gamelost = true;
 		}
-		else if (snake[0].x + nextX <= -28)
+		else if (snakehead.x <= -28)
 		{
 			console.log("GAME OVER!");
 			snake = [];
@@ -201,14 +205,14 @@ const moveSnake = (movex, movey) => {
 			score += 1;
 		}
 
-		if(snake[0].y + nextY > gameBoard.height || snake[0].x < 0)
+		if(snakehead.y >= 900)
 		{
 			console.log("GAME OVER!");
 			snake = [];
 
 			gamelost = true;
 		}
-		else if (snake[0].y + nextY < 0 || snake[0].y > 900)
+		else if (snakehead.y <= -2)
 		{
 			console.log("GAME OVER!");
 			snake = [];
