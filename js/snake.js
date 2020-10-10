@@ -150,6 +150,17 @@ const drawApple = () => {
 	gameContext.strokeRect(applex, appley, snakeChunkWidth, snakeChunkHeight);
 }
 
+const hasColidedFood = () => {
+
+	if(snake[0].x == applex && snake[0].y == appley)
+	{
+		addSnakePart(snake[0].x + nextX, snake[0].y, snake);
+		apple = createRandomApplePos();
+
+		score += 1;
+	}
+}
+
 const drawSnake = () => {
 	gameContext.fillStyle   = snakeCol;
 	gameContext.strokeStyle = snakeBdr;
@@ -166,15 +177,6 @@ const moveSnake = (movex, movey) => {
 
 	if(movex)
 	{
-		if(snakehead.x == applex && snakehead.y == appley)
-		{
-			addSnakePart(snake[0].x + nextX, nextY, snake);
-			apple = createRandomApplePos();
-
-			drawApple();
-			score += 1;
-		}
-
 		if(snakehead.x >= gameBoard.width)
 		{
 			console.log("GAME OVER!");
@@ -196,15 +198,6 @@ const moveSnake = (movex, movey) => {
 	}
 	else if (movey)
 	{
-		if(snakehead.x == applex && snakehead.y == appley)
-		{
-			addSnakePart(nextX, snake[0].y + nextY, snake);
-			apple = createRandomApplePos();
-
-			drawApple();
-			score += 1;
-		}
-
 		if(snakehead.y >= 900)
 		{
 			console.log("GAME OVER!");
@@ -323,10 +316,15 @@ const main = () => {
 			moveSnake(false, true);
 		}
 
+		setInterval(function food()
+		{
+			hasColidedFood();
+		}, 50);
+
 		drawAssets();
 
 		main();
-	}, 1000 / 11)
+	}, 1000 / 11);
 }
 
 document.addEventListener("keydown", getSnakeInput);
