@@ -3,12 +3,12 @@ My first game, made with vanilla JS, not well optimized but a first project none
 
 TODO:
 
-      -- remove vertical movement
+      -- add new piece of snake to back not front (can not eat apples next to wall on x-axis)
 
-      -- add colider to snake, lose con
+PATCH v1:
 
-      -- quick movement makes snake not apple some times (can be realted to vertical movement)
+      -- added colider to snake
 
-      -- doesen't directly die when hitting wall (can be realted to vertical movement)
+      -- fixed apple eating
 
-      -- quick movement makes snake not eat apple some times (related to timing of methods)
+      -- fixed wall colider

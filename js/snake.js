@@ -13,8 +13,10 @@ const appleBdr = "lime";
 let gamelost = false;
 let score = 0;
 
-let defaultSnakeSize = 5;
-let initialized = false;
+let time = 1;
+let delay = 11;
+
+const tickTime = (time * 1000) / delay;
 
 let snake = [
 
@@ -129,13 +131,14 @@ const createRandomApplePos = () => {
 
 	// ytry end
 
+	/*
 	console.log("applexpos : " + appleX);
 	console.log("appleypos : " + appleY);
+	*/
 
 	const apple = [ { xpos: appleX, ypos: appleY } ];
 
 	return apple;
-
 }
 
 const drawApple = () => {
@@ -148,17 +151,6 @@ const drawApple = () => {
 
 	gameContext.fillRect(applex, appley, snakeChunkWidth, snakeChunkHeight);
 	gameContext.strokeRect(applex, appley, snakeChunkWidth, snakeChunkHeight);
-}
-
-const hasColidedFood = () => {
-
-	if(snake[0].x == applex && snake[0].y == appley)
-	{
-		addSnakePart(snake[0].x + nextX, snake[0].y, snake);
-		apple = createRandomApplePos();
-
-		score += 1;
-	}
 }
 
 const drawSnake = () => {
@@ -177,45 +169,11 @@ const moveSnake = (movex, movey) => {
 
 	if(movex)
 	{
-		if(snakehead.x >= gameBoard.width)
-		{
-			console.log("GAME OVER!");
-			snake = [];
-
-			gamelost = true;
-		}
-		else if (snakehead.x <= -28)
-		{
-			console.log("GAME OVER!");
-			snake = [];
-
-			gamelost = true;
-		}
-		else
-		{
-			shiftSnakePos(snake[0].x + nextX, snake[0].y, snake);
-		}
+		shiftSnakePos(snake[0].x + nextX, snake[0].y, snake);
 	}
 	else if (movey)
 	{
-		if(snakehead.y >= 900)
-		{
-			console.log("GAME OVER!");
-			snake = [];
-
-			gamelost = true;
-		}
-		else if (snakehead.y <= -2)
-		{
-			console.log("GAME OVER!");
-			snake = [];
-
-			gamelost = true;
-		}
-		else
-		{
-			shiftSnakePos(snake[0].x, snake[0].y + nextY, snake);
-		}
+		shiftSnakePos(snake[0].x, snake[0].y + nextY, snake);
 	}
 }
 
@@ -230,11 +188,11 @@ const getSnakeInput = (event) => {
 			if(direction != "right" && direction != "left" && direction != "firstmove")
 			{
 				nextX = -30;
-				nextY = snake[0].y;
+				nextY = 0;
 
-				console.log(direction);
+				// console.log(direction);
 
-				shiftSnakePos(snake[0].x + nextX, nextY, snake);
+				shiftSnakePos(snake[0].x + nextX, snake[0].y, snake);
 
 				direction = "left";
 			}
@@ -245,12 +203,12 @@ const getSnakeInput = (event) => {
 		case 38:
 			if(direction != "down" && direction != "up")
 			{
-				nextX = snake[0].x;
+				nextX = 0;
 				nextY = -30;
 
-				console.log(direction);
+				// console.log(direction);
 
-				shiftSnakePos(nextX, snake[0].y + nextY, snake);
+				shiftSnakePos(snake[0].x, snake[0].y + nextY, snake);
 
 				direction = "up";
 			}
@@ -262,11 +220,11 @@ const getSnakeInput = (event) => {
 			if(direction != "left" && direction != "right")
 			{
 				nextX = 30;
-				nextY = snake[0].y;
+				nextY = 0;
 
-				console.log(direction);
+				// console.log(direction);
 
-				shiftSnakePos(snake[0].x + nextX, nextY, snake);
+				shiftSnakePos(snake[0].x + nextX, snake[0].y, snake);
 
 				direction = "right";
 			}
@@ -277,18 +235,61 @@ const getSnakeInput = (event) => {
 		case 40:
 			if(direction != "up" && direction != "down")
 			{
-				nextX = snake[0].x;
+				nextX = 0;
 				nextY = 30;
 
-				console.log(direction);
+				// console.log(direction);
 
-				shiftSnakePos(nextX, snake[0].y + nextY, snake);
+				shiftSnakePos(snake[0].x, snake[0].y + nextY, snake);
 
 				direction = "down";
 			}
 
 			break;
 	}
+}
+
+const lost = () => {
+	document.removeEventListener("keydown", getSnakeInput);
+	console.log("GAME OVER!");
+
+	gamelost = true;
+	snake = [];
+}
+
+const hasColidedFood = () => {
+
+	if(snake[0].x == applex && snake[0].y == appley)
+	{
+		addSnakePart(snake[0].x + nextX, snake[0].y + nextY, snake);
+		apple = createRandomApplePos();
+
+		score += 1;
+	}
+}
+
+const hasColidedWall = () => {
+	if(snake[0].x > gameBoard.width - 2 || snake[0].x < -28)
+	{
+		lost();
+	}
+	else if (snake[0].y > gameBoard.height - 2 || snake[0].y < -28)
+	{
+		lost();
+	}
+}
+
+const hasColidedSelf = () =>
+{
+
+	for(let i = 1; i < snake.length - 1; i++)
+	{
+		if(snake[0].x == snake[i].x && snake[0].y == snake[i].y)
+		{
+			lost();
+		}
+	}
+
 }
 
 const drawAssets = () => {
@@ -300,34 +301,39 @@ const drawAssets = () => {
 }
 
 const main = () => {
-	if(gamelost)
-	{
-		return;
-	}
 
-	setTimeout(function onTick()
+	var gameplay = setTimeout(function onTick()
 	{
 		if (nextX == 30 || nextX == -30)
 		{
-			moveSnake(true, false)
+			moveSnake(true, false);
 		}
 		else if (nextY == 30 || nextY == -30)
 		{
 			moveSnake(false, true);
 		}
 
-		setInterval(function food()
-		{
-			hasColidedFood();
-		}, 50);
-
 		drawAssets();
 
+		var colider = setInterval(function collision()
+		{
+			if(gamelost)
+			{
+				clearInterval(colider);
+				clearTimeout(gameplay);
+				return;
+			}
+
+			hasColidedFood();
+			hasColidedWall();
+			hasColidedSelf();
+		}, 100);
+
 		main();
-	}, 1000 / 11);
+	}, tickTime);
 }
 
 document.addEventListener("keydown", getSnakeInput);
-
 apple = createRandomApplePos();
+
 main();
