@@ -5,6 +5,8 @@ TODO:
 
       -- add new piece of snake to back not front (can not eat apples next to wall on x-axis)
 
+      -- new apple eating bug
+
 PATCH v1:
 
       -- added colider to snake
@@ -12,3 +14,7 @@ PATCH v1:
       -- fixed apple eating
 
       -- fixed wall colider
+
+PATCH v2:
+
+      -- added login system with php

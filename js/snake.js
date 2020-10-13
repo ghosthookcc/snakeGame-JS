@@ -10,6 +10,13 @@ const snakeBdr = "lightblue";
 const appleCol = "red";
 const appleBdr = "lime";
 
+const gridChunkSize = 30;
+
+const paddingLeft  = -28;
+const paddingUp    = 2;
+const paddingRight = -2;
+const paddingDown  = -2;
+
 let gamelost = false;
 let score = 0;
 
@@ -28,8 +35,8 @@ let snake = [
 
 ]
 
-let snakeChunkWidth  = Math.floor(gameBoard.width / 30);
-let snakeChunkHeight = Math.floor(gameBoard.height / 30);
+let snakeChunkWidth  = Math.floor(gameBoard.width / gridChunkSize);
+let snakeChunkHeight = Math.floor(gameBoard.height / gridChunkSize);
 
 let snakehead;
 
@@ -53,25 +60,20 @@ const drawBoard = () => {
 	gameContext.strokeStyle = snakeBdr;
 
 	// left wall
-	gameContext.fillRect(-28, 0, snakeChunkWidth, gameBoard.height);
-	gameContext.strokeRect(-28, 0, snakeChunkWidth, gameBoard.height);
+	gameContext.fillRect(paddingLeft, 0, snakeChunkWidth, gameBoard.height);
+	gameContext.strokeRect(paddingLeft, 0, snakeChunkWidth, gameBoard.height);
 
 	// upper wall
-	gameContext.fillRect(0, 0, gameBoard.width, 2);
-	gameContext.strokeRect(0, 0, gameBoard.width, 2);
+	gameContext.fillRect(0, 0, gameBoard.width, paddingUp);
+	gameContext.strokeRect(0, 0, gameBoard.width, paddingUp);
 
 	// right wall
-	gameContext.fillRect(gameBoard.width - 2, 0, snakeChunkWidth, gameBoard.height);
-	gameContext.strokeRect(gameBoard.width - 2, 0, snakeChunkWidth, gameBoard.height);
+	gameContext.fillRect(gameBoard.width + paddingRight, 0, snakeChunkWidth, gameBoard.height);
+	gameContext.strokeRect(gameBoard.width + paddingRight, 0, snakeChunkWidth, gameBoard.height);
 
 	// down wall
-	gameContext.fillRect(0, gameBoard.height, gameBoard.width, -2);
-	gameContext.strokeRect(0, gameBoard.height, gameBoard.width, -2);
-
-	/*
-	gameContext.fillRect(30, 0, snakeChunkWidth, snakeChunkHeight);
-	gameContext.strokeRect(30, 0, snakeChunkWidth, snakeChunkHeight);
-	*/
+	gameContext.fillRect(0, gameBoard.height, gameBoard.width, paddingDown);
+	gameContext.strokeRect(0, gameBoard.height, gameBoard.width, paddingDown);
 
 }
 
@@ -97,15 +99,15 @@ const createRandomApplePos = () => {
 
 	// xtry start
 
-	let randAmount = Math.floor(Math.random() * 29);
-	let xrandPos = (gameBoard.width / 30) * randAmount;
+	let randAmount = Math.floor(Math.random() * 29); // random number between 1 to 30 - 1 for size purposes
+	let xrandPos = (gameBoard.width / gridChunkSize) * randAmount;
 
 	let i = 0;
 
-	while (xrandPos % 30 != 0 && snake[i].x != xrandPos && i < snake.length)
+	while (xrandPos % gridChunkSize != 0 && snake[i].x != xrandPos && i < snake.length)
 	{
 		randAmount = Math.floor(Math.random() * 29);
-		xrandPos = (gameBoard.width / 30) * randAmount;
+		xrandPos = (gameBoard.width / grudChunkSize) * randAmount;
 		if(snake[i] != xrandPos)
 		{
 			i++;
@@ -121,10 +123,16 @@ const createRandomApplePos = () => {
 	randAmount = Math.floor(Math.random() * 29);
 	let yrandPos = (gameBoard.height / 30) * randAmount;
 
-	while(yrandPos % 30 != 0)
+	i = 0;
+
+	while(yrandPos % 30 != 0 && snake[i].y != yrandPos && i < snake.length)
 	{
 		randAmount = Math.floor(Math.random() * 29);
 		yrandPos = (gameBoard.height / 30) * randAmount;
+		if(snake[i] != xrandPos)
+		{
+			i++;
+		}
 	}
 
 	let appleY = yrandPos;
@@ -265,17 +273,20 @@ const hasColidedFood = () => {
 		apple = createRandomApplePos();
 
 		score += 1;
+		console.log("COLIDED_APPLE");
 	}
 }
 
 const hasColidedWall = () => {
-	if(snake[0].x > gameBoard.width - 2 || snake[0].x < -28)
+	if(snake[0].x > gameBoard.width + paddingRight || snake[0].x < paddingLeft)
 	{
 		lost();
+		console.log("COLIDED_X");
 	}
-	else if (snake[0].y > gameBoard.height - 2 || snake[0].y < -28)
+	else if (snake[0].y > gameBoard.height + paddingTop || snake[0].y < paddingDown)
 	{
 		lost();
+		console.log("COLIDED_Y");
 	}
 }
 

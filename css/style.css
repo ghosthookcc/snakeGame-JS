@@ -14,15 +14,73 @@ body {
 
 #snakeCanvas {
 
-    position: absolute;
-	display: block;
-	/* background-color: black; */
 
-	margin: auto;
+    position: absolute;
+		display: block;
+		/* background-color: black; */
+
+		margin: auto;
     padding: 0;
 
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
+}
+
+.loginContainer {
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	height: 100%;
+
+}
+
+.loginForm {
+
+	display: flex;
+	flex-direction: column;
+
+	justify-content: flex-start;
+	text-align: center;
+
+	width: 50%;
+	height: auto;
+
+}
+
+.loginForm label {
+
+	margin: 12px 0;
+
+}
+
+.loginForm input {
+
+	margin-bottom: 16px;
+
+}
+
+.loginForm input, button {
+
+	padding: 6px;
+
+}
+
+.logoutDiv {
+
+	position: absolute;
+
+	left: 50%;
+	right: 50%;
+	top: 0;
+
+}
+
+.logoutDiv a {
+
+	text-decoration: none;
+
 }
