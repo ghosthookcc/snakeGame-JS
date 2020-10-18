@@ -2,6 +2,8 @@
 
 session_start();
 
+include_once("includes/connect.inc.php");
+
 ?>
 
 <!DOCTYPE html>

@@ -18,3 +18,7 @@ PATCH v1:
 PATCH v2:
 
       -- added login system with php
+
+PATCH v3:
+
+	  -- improved php login system with PDO
