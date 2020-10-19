@@ -1,14 +1,14 @@
-<?php 
-	
-	$host = "yourhosthere";
-	$user = "yourusernamehere";
+<?php
+
+	$host = "localhost";
+	$user = "root";
 	$pass = "";
-	$db = "yourdbhere";
-	$charset = "yourcharsethere";
+	$db = "snakedb";
+	$charset = "utf8mb4";
 
-	$pdoDSN = "mysql:host=".$host.";dbname=".$db.";charset=".$charset.""; 
+	$pdoDSN = "mysql:host=".$host.";dbname=".$db.";charset=".$charset."";
 
-	try 
+	try
 	{
 		$pdo = new PDO($pdoDSN, $user, $pass);
 	} catch (PDOException $exception) {

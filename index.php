@@ -24,6 +24,7 @@ include_once("includes/connect.inc.php");
 	{
 		echo "<div class='loginContainer'>";
 			echo "<form class='loginForm' method='POST' action='includes/login.inc.php'>";
+				echo "<a id='createUserLink' href='create.php'>Add user</a>";
 
 				echo "<label>Username: </label><input type='text' name='username'>";
 				echo "<label>Password: </label><input type='password' name='password'>";

@@ -283,7 +283,7 @@ const hasColidedWall = () => {
 		lost();
 		console.log("COLIDED_X");
 	}
-	else if (snake[0].y > gameBoard.height + paddingTop || snake[0].y < paddingDown)
+	else if (snake[0].y > gameBoard.height + paddingUp || snake[0].y < paddingDown)
 	{
 		lost();
 		console.log("COLIDED_Y");

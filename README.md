@@ -22,3 +22,7 @@ PATCH v2:
 PATCH v3:
 
 	  -- improved php login system with PDO
+
+PATCH v4:
+
+    -- made php login system secure with php password_hash and password_verify
