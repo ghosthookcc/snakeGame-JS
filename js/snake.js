@@ -38,8 +38,6 @@ let snake = [
 let snakeChunkWidth  = Math.floor(gameBoard.width / gridChunkSize);
 let snakeChunkHeight = Math.floor(gameBoard.height / gridChunkSize);
 
-let snakehead;
-
 let nextX = 0;
 let nextY = 0;
 
@@ -121,14 +119,14 @@ const createRandomApplePos = () => {
 	// ytry start
 
 	randAmount = Math.floor(Math.random() * 29);
-	let yrandPos = (gameBoard.height / 30) * randAmount;
+	let yrandPos = (gameBoard.height / gridChunkSize) * randAmount;
 
 	i = 0;
 
 	while(yrandPos % 30 != 0 && snake[i].y != yrandPos && i < snake.length)
 	{
 		randAmount = Math.floor(Math.random() * 29);
-		yrandPos = (gameBoard.height / 30) * randAmount;
+		yrandPos = (gameBoard.height / gridChunkSize) * randAmount;
 		if(snake[i] != xrandPos)
 		{
 			i++;
@@ -173,8 +171,6 @@ const drawSnake = () => {
 }
 
 const moveSnake = (movex, movey) => {
-	snakehead = { x: snake[0].x, y: snake[0].y }
-
 	if(movex)
 	{
 		shiftSnakePos(snake[0].x + nextX, snake[0].y, snake);
@@ -278,13 +274,15 @@ const hasColidedFood = () => {
 }
 
 const hasColidedWall = () => {
-	if(snake[0].x > gameBoard.width + paddingRight || snake[0].x < paddingLeft)
+	if(snake[0].x > gameBoard.width + paddingRight || snake[0].x < 0)
 	{
+		console.log(snake[0].x)
 		lost();
 		console.log("COLIDED_X");
 	}
-	else if (snake[0].y > gameBoard.height + paddingUp || snake[0].y < paddingDown)
+	else if (snake[0].y > gameBoard.width + paddingDown || snake[0].y < 0)
 	{
+		console.log(snake[0].y)
 		lost();
 		console.log("COLIDED_Y");
 	}

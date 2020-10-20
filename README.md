@@ -26,3 +26,7 @@ PATCH v3:
 PATCH v4:
 
     -- made php login system secure with php password_hash and password_verify
+
+PATCH v5:
+
+    -- small colider changes, specifically walls
