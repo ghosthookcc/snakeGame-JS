@@ -21,7 +21,7 @@ let gamelost = false;
 let score = 0;
 
 let time = 1;
-let delay = 11;
+let delay = 8;
 
 const tickTime = (time * 1000) / delay;
 
@@ -196,8 +196,6 @@ const getSnakeInput = (event) => {
 
 				// console.log(direction);
 
-				shiftSnakePos(snake[0].x + nextX, snake[0].y, snake);
-
 				direction = "left";
 			}
 
@@ -211,8 +209,6 @@ const getSnakeInput = (event) => {
 				nextY = -30;
 
 				// console.log(direction);
-
-				shiftSnakePos(snake[0].x, snake[0].y + nextY, snake);
 
 				direction = "up";
 			}
@@ -228,8 +224,6 @@ const getSnakeInput = (event) => {
 
 				// console.log(direction);
 
-				shiftSnakePos(snake[0].x + nextX, snake[0].y, snake);
-
 				direction = "right";
 			}
 
@@ -243,8 +237,6 @@ const getSnakeInput = (event) => {
 				nextY = 30;
 
 				// console.log(direction);
-
-				shiftSnakePos(snake[0].x, snake[0].y + nextY, snake);
 
 				direction = "down";
 			}

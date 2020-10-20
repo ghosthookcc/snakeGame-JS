@@ -30,3 +30,7 @@ PATCH v4:
 PATCH v5:
 
     -- small colider changes, specifically walls
+
+PATCH v6:
+
+    -- fixed movement bug making snake move twice
